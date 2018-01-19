@@ -8,7 +8,6 @@
 <meta name="author" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="">
-<script src="bundle.js"></script>
 <!--[if lt IE 9]>
 <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -16,8 +15,24 @@
 <link rel="shortcut icon" href="">
 </head>
 <body>
-<!-- Place your content here -->
-<!-- SCRIPTS -->
-<!-- Example: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <form>
+        <fieldset>
+          <legend>Form</legend>
+          <div class="form-group">
+            <label for="exampleInputEmail1">UserId</label>
+            <input type="email" class="form-control" placeholder="UserId" required data-minlength="2">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" placeholder="Password" required data-minlength="4" data-maxlength="10">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">郵便番号</label>
+            <input type="text" class="form-control" placeholder="addressId">
+          </div>
+        <fieldset>
+    </form>
+    <script src="bundle.js"></script>
+    <link rel="stylesheet" href="https://bootswatch.com/4/yeti/bootstrap.min.css">
 </body>
 </html>

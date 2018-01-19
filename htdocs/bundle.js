@@ -72,14 +72,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var validation_1 = __webpack_require__(1);
 var observer_1 = __webpack_require__(2);
-var valid = new validation_1.validation();
-var input = "";
-var obsrv = new observer_1.observer();
-obsrv.on(valid.require, {});
-obsrv.on(valid.min_length, { min: 2 });
-obsrv.on(valid.max_length, { max: 10 });
-obsrv.trigger(input);
-console.log(valid.msg);
+var text = "";
+Array.from(document.querySelectorAll("input"), function (input) {
+    var valid = new validation_1.validation();
+    var obsrv = new observer_1.observer();
+    if (input.required) {
+        obsrv.on(valid.require, {});
+    }
+    var min;
+    if (min = input.getAttribute("data-minlength")) {
+        obsrv.on(valid.min_length, { min: min });
+    }
+    console.log("min:", min);
+    var max;
+    if (max = input.getAttribute("data-maxlength")) {
+        obsrv.on(valid.max_length, { max: max });
+    }
+    console.log("max:", max);
+    obsrv.trigger(text);
+    console.log(valid.msg);
+});
 
 
 /***/ }),
