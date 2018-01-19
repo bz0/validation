@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "lib" : ["es2015", "es2015.iterable", "dom"]
+    },
+    "files":[
+        "typings/index.d.ts",
+        "src/index.ts"
+    ],
+    "exclude": [
+        "node_modules/"
+    ]    
+}
