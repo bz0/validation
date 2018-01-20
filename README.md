@@ -2,6 +2,9 @@
 
 typescriptでの入力バリデーションチェックです。
 
+![フォーム](https://imgur.com/a/qM7Q2 "サンプル")
+
+
 ## 使い方
 
 typescriptでの使い方です。  
