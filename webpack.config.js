@@ -1,6 +1,6 @@
 var path = require('path');
 module.exports = {
-    entry: './src/index.ts',
+    entry: './src/example.ts',
     output: {
         filename: './htdocs/bundle.js'
     },

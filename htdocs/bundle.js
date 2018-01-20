@@ -71,27 +71,9 @@
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var validation_1 = __webpack_require__(1);
-var observer_1 = __webpack_require__(2);
-var text = "";
-Array.from(document.querySelectorAll("input"), function (input) {
-    var valid = new validation_1.validation();
-    var obsrv = new observer_1.observer();
-    if (input.required) {
-        obsrv.on(valid.require, {});
-    }
-    var min;
-    if (min = input.getAttribute("data-minlength")) {
-        obsrv.on(valid.min_length, { min: min });
-    }
-    console.log("min:", min);
-    var max;
-    if (max = input.getAttribute("data-maxlength")) {
-        obsrv.on(valid.max_length, { max: max });
-    }
-    console.log("max:", max);
-    obsrv.trigger(text);
-    console.log(valid.msg);
-});
+var v = new validation_1.validation();
+var button = document.getElementById("regist");
+button.onclick = v.check;
 
 
 /***/ }),
@@ -101,8 +83,60 @@ Array.from(document.querySelectorAll("input"), function (input) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var checker_1 = __webpack_require__(2);
+var observer_1 = __webpack_require__(3);
+var render_1 = __webpack_require__(4);
 var validation = /** @class */ (function () {
-    function validation() {
+    function validation(config) {
+        if (config === void 0) { config = {}; }
+        var _this = this;
+        this.config = {
+            "query": "input"
+        };
+        this.check = function () {
+            var inputAll = document.querySelectorAll(_this.config.query);
+            Array.from(inputAll, function (input) {
+                _this.chk.msg = [];
+                console.log("required:", input.getAttribute("required"));
+                if (input.getAttribute("required") !== null) {
+                    _this.obsrv.on(_this.chk.require, {});
+                }
+                var min;
+                if (min = input.getAttribute("data-minlength")) {
+                    _this.obsrv.on(_this.chk.min_length, { min: min });
+                }
+                console.log("min:", min);
+                var max;
+                if (max = input.getAttribute("data-maxlength")) {
+                    _this.obsrv.on(_this.chk.max_length, { max: max });
+                }
+                console.log("max:", max);
+                _this.obsrv.trigger(input.value);
+                console.log(_this.chk.msg);
+                _this.r.errorMsg(input, _this.chk.msg);
+            });
+        };
+        if (config['query']) {
+            this.config["query"] = config['query'];
+        }
+        this.chk = new checker_1.checker();
+        this.obsrv = new observer_1.observer();
+        this.r = new render_1.render();
+    }
+    return validation;
+}());
+exports.validation = validation;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var checker = /** @class */ (function () {
+    function checker() {
         var _this = this;
         this.errorMsg = {
             'require': "入力が空です",
@@ -147,13 +181,13 @@ var validation = /** @class */ (function () {
         };
         this.msg = [];
     }
-    return validation;
+    return checker;
 }());
-exports.validation = validation;
+exports.checker = checker;
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -180,6 +214,51 @@ var observer = /** @class */ (function () {
     return observer;
 }());
 exports.observer = observer;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var render = /** @class */ (function () {
+    function render() {
+        var _this = this;
+        this.html = {
+            'ul_open': "<ul class=\"errorMsg\">",
+            'ul_close': "</ul>",
+            'li_open': "<li>",
+            'li_close': "</li>"
+        };
+        this.errorMsg = function (el, msg) {
+            _this.initialize(el);
+            var htmlText = _this.htmlCreate(msg);
+            el.insertAdjacentHTML('afterend', htmlText);
+        };
+        this.initialize = function (el) {
+            var nextElement = el.nextElementSibling;
+            if (nextElement) {
+                console.log("className:", nextElement.className);
+                if (nextElement.className === "errorMsg") {
+                    console.log("削除");
+                    nextElement.parentNode.removeChild(nextElement);
+                }
+            }
+        };
+        this.htmlCreate = function (msg) {
+            var htmlText = _this.html.ul_open;
+            for (var i = 0; i < msg.length; i++) {
+                htmlText += _this.html.li_open + msg[i] + _this.html.li_close;
+            }
+            htmlText += _this.html.ul_close;
+            return htmlText;
+        };
+    }
+    return render;
+}());
+exports.render = render;
 
 
 /***/ })
