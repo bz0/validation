@@ -2,17 +2,6 @@
 
 typescriptでの入力バリデーションチェックです。
 
-## 使い方
-
-typescriptでの使い方です。  
-
-```
-import { validation } from "./validation"
-
-const v = new validation();
-const button = document.getElementById("regist");
-button.onclick = v.check;
-```
 
 ## 未入力チェック
 
