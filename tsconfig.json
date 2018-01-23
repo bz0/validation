@@ -8,7 +8,7 @@
     },
     "files":[
         "typings/index.d.ts",
-        "src/example.ts"
+        "src/index.ts"
     ],
     "exclude": [
         "node_modules/"

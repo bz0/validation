@@ -30,3 +30,23 @@ ex.10文字以下かをチェックします。
 ```html:sample
 <input type="text" data-maxlength="10">
 ```
+
+## メルアドチェック
+
+「mail」属性で、メルアドが入力されたかのチェックが有効になります。  
+
+ex.メルアドかをチェックします。
+
+```html:sample
+<input type="text" mail>
+```
+
+## 郵便番号チェック
+
+「postalcode」属性で、郵便番号が入力されたかのチェックが有効になります。  
+
+ex.郵便番号かをチェックします。
+
+```html:sample
+<input type="text" postalcode>
+```

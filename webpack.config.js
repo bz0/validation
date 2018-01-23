@@ -1,8 +1,8 @@
 var path = require('path');
 module.exports = {
-    entry: './src/example.ts',
+    entry: './src/index.ts',
     output: {
-        filename: './htdocs/bundle.js'
+        filename: './dest/bundle.js'
     },
     devtool: 'source-map',
     resolve: {

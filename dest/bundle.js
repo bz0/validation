@@ -98,14 +98,25 @@ var validation = /** @class */ (function () {
             Array.from(inputAll, function (input) {
                 _this.chk.msg = [];
                 console.log("required:", input.getAttribute("required"));
+                //未入力
                 if (input.getAttribute("required") !== null) {
                     _this.obsrv.on(_this.chk.require, {});
                 }
+                //メルアド
+                if (input.getAttribute("mail") !== null) {
+                    _this.obsrv.on(_this.chk.mail_address, {});
+                }
+                //郵便番号
+                if (input.getAttribute("postalcode") !== null) {
+                    _this.obsrv.on(_this.chk.postal_code, {});
+                }
+                //最小文字数
                 var min;
                 if (min = input.getAttribute("data-minlength")) {
                     _this.obsrv.on(_this.chk.min_length, { min: min });
                 }
                 console.log("min:", min);
+                //最大文字数
                 var max;
                 if (max = input.getAttribute("data-maxlength")) {
                     _this.obsrv.on(_this.chk.max_length, { max: max });
@@ -141,12 +152,15 @@ var checker = /** @class */ (function () {
         this.errorMsg = {
             'require': "入力が空です",
             'min_length': "{$target}文字以上で入力して下さい",
-            'max_length': "{$target}文字以下で入力して下さい"
+            'max_length': "{$target}文字以下で入力して下さい",
+            'mail_address': "メールアドレスを入力して下さい",
+            'postal_code': "郵便番号を入力して下さい"
         };
         this.msg = [];
         this.require = function (input, param) {
             if (input === "") {
-                _this.msg.push(_this.error_message("require"));
+                var msg = _this.error_message("require");
+                _this.msg.push(msg);
             }
         };
         this.min_length = function (input, param) {
@@ -163,6 +177,22 @@ var checker = /** @class */ (function () {
                 _this.msg.push(msg);
             }
         };
+        this.mail_address = function (input, param) {
+            console.log("mail_address 実行");
+            if (/^(?:(?:(?:(?:[a-zA-Z0-9_!#\$\%&'*+/=?\^`{}~|\-]+)(?:\.(?:[a-zA-Z0-9_!#\$\%&'*+/=?\^`{}~|\-]+))*)|(?:"(?:\\[^\r\n]|[^\\"])*")))\@(?:(?:(?:(?:[a-zA-Z0-9_!#\$\%&'*+/=?\^`{}~|\-]+)(?:\.(?:[a-zA-Z0-9_!#\$\%&'*+/=?\^`{}~|\-]+))*)|(?:\[(?:\\\S|[\x21-\x5a\x5e-\x7e])*\])))$/.test(input) === false) {
+                console.log("mail_address　エラー");
+                var msg = _this.error_message("mail_address");
+                _this.msg.push(msg);
+            }
+        };
+        this.postal_code = function (input, param) {
+            console.log("postal_code実行");
+            if (/^\d{3}-\d{4}$/.test(input) === false) {
+                console.log("postal_code　エラー");
+                var msg = _this.error_message("postal_code");
+                _this.msg.push(msg);
+            }
+        };
         this.error_message = function (func_name) {
             var msg = "";
             if (func_name === "require") {
@@ -173,6 +203,12 @@ var checker = /** @class */ (function () {
             }
             else if (func_name === "max_length") {
                 msg = _this.errorMsg.max_length;
+            }
+            else if (func_name === "mail_address") {
+                msg = _this.errorMsg.mail_address;
+            }
+            else if (func_name === "postal_code") {
+                msg = _this.errorMsg.postal_code;
             }
             return msg;
         };
