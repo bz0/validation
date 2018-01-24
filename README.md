@@ -50,3 +50,7 @@ ex.郵便番号かをチェックします。
 ```html:sample
 <input type="text" postalcode>
 ```
+
+## ライセンス
+
+MIT
